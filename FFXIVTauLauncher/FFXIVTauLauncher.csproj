@@ -110,7 +110,9 @@
     <None Include="FFXIVTauLauncher_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="NLog.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\final_fantasy_xiv_hyur_lancer_by_platinum_disco-d6dphl4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

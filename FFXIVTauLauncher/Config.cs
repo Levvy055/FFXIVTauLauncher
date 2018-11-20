@@ -15,7 +15,7 @@ namespace FFXIVTauLauncher
     public class Config
     {
         private static readonly string PATH = "ffxiv_launcher.conf";
-        private static readonly StorageFolder StorageFolder = ApplicationData.Current.RoamingFolder;
+        private static readonly StorageFolder StorageFolder = ApplicationData.Current.LocalFolder;
         private static StorageFile ConfigFile;
 
         private static readonly Property[] Defaults =
@@ -36,17 +36,16 @@ namespace FFXIVTauLauncher
         {
             ConfigFile = await StorageFolder.CreateFileAsync(PATH, CreationCollisionOption.ReplaceExisting);
             Properties = new List<Property>(Defaults);
-            Save();
+            await Save();
             Properties = null;
         }
 
-        public bool Save()
+        public async Task<bool> Save()
         {
             try
             {
                 var str = JsonConvert.SerializeObject(Properties);
-                var task = FileIO.WriteTextAsync(ConfigFile, str);
-                task.GetResults();
+                await FileIO.WriteTextAsync(ConfigFile, str);
                 return true;
             }
             catch (Exception ex)
@@ -56,11 +55,11 @@ namespace FFXIVTauLauncher
             }
         }
 
-        public bool Load()
+        public async Task<bool> Load()
         {
             try
             {
-                var str = FileIO.ReadTextAsync(ConfigFile).GetResults();
+                var str = await FileIO.ReadTextAsync(ConfigFile);
                 Properties = JsonConvert.DeserializeObject<List<Property>>(str);
                 return Properties != null;
             }

@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -31,7 +32,8 @@ namespace FFXIVTauLauncher
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            Config=new Config();
+            InitLog();
+            Config = new Config();
         }
 
         /// <summary>
@@ -67,10 +69,11 @@ namespace FFXIVTauLauncher
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
+
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
-            
+
             ApplyConfig();
         }
 
@@ -98,33 +101,42 @@ namespace FFXIVTauLauncher
             deferral.Complete();
         }
 
-        private void ApplyConfig()
+        private void InitLog()
         {
-            var loaded=Config.Load();
-            if (loaded)
-            {
-                Config.Properties.ForEach(p =>
-                {
-                    try
-                    {
-                        switch (p.PropertyType)
-                        {
-                            case PropertyType.SAVE_LOGIN:
-                                break;
-                            case PropertyType.SAVE_PASSWORD:
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
-                    }
-                });
-            }
+            var storageFolder = ApplicationData.Current.LocalFolder;
+            LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
         }
 
-        public Config Config { get; }
+        private void ApplyConfig()
+        {
+            Config.Load().ContinueWith(task =>
+            {
+                if (task.Result)
+                {
+                    Config.Properties.ForEach(p =>
+                    {
+                        try
+                        {
+                            switch (p.PropertyType)
+                            {
+                                case PropertyType.SAVE_LOGIN:
+                                    break;
+                                case PropertyType.SAVE_PASSWORD:
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error(ex, "Error during 'config loading' step");
+                        }
+                    });
+                }
+            });
+        }
+
+        public static Config Config { get; private set; }
+        private Logger Log { get; } = LogManager.GetCurrentClassLogger();
     }
 }

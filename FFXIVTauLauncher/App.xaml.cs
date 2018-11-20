@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using NLog;
 
 namespace FFXIVTauLauncher
 {
@@ -30,6 +31,7 @@ namespace FFXIVTauLauncher
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            Config=new Config();
         }
 
         /// <summary>
@@ -39,15 +41,12 @@ namespace FFXIVTauLauncher
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
@@ -71,6 +70,8 @@ namespace FFXIVTauLauncher
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+            
+            ApplyConfig();
         }
 
         /// <summary>
@@ -96,5 +97,34 @@ namespace FFXIVTauLauncher
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+        private void ApplyConfig()
+        {
+            var loaded=Config.Load();
+            if (loaded)
+            {
+                Config.Properties.ForEach(p =>
+                {
+                    try
+                    {
+                        switch (p.PropertyType)
+                        {
+                            case PropertyType.SAVE_LOGIN:
+                                break;
+                            case PropertyType.SAVE_PASSWORD:
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                });
+            }
+        }
+
+        public Config Config { get; }
     }
 }

@@ -6,9 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
-    <Grid>
-
-    </Grid>
+    <RelativePanel>
+        <RelativePanel.Background>
+            <ImageBrush ImageSource="/Assets/final_fantasy_xiv_hyur_lancer_by_platinum_disco-d6dphl4.png"/>
+        </RelativePanel.Background>
+        <StackPanel RelativePanel.AlignLeftWithPanel="True" 
+                    RelativePanel.AlignVerticalCenterWithPanel="True" 
+                    Margin="82,200,10,0" 
+                    MinWidth="400" 
+                    Orientation="Vertical" 
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled" 
+                    Spacing="10">
+            <TextBlock Text="Login" />
+            <TextBox x:Name="BoxLogin"/>
+            <TextBlock Text="Password" />
+            <PasswordBox x:Name="BoxPassword" InputScope="Password"/>
+            <TextBlock Text="1-Time Password" />
+            <PasswordBox x:Name="BoxOneTime" InputScope="NumericPassword"/>
+            <StackPanel Orientation="Horizontal" Spacing="25">
+                <Button Content="Login" Click="ButtonLogin_Click" MinWidth="100"/>
+                <Button Content="Account" MinWidth="100" Click="ButtonAccount_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </RelativePanel>
 </Page>

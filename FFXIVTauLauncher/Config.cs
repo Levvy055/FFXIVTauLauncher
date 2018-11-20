@@ -28,7 +28,7 @@ namespace FFXIVTauLauncher
         {
             if (!File.Exists(PATH))
             {
-                Init().Wait(10000);
+                Init().Wait(2000);
             }
         }
 

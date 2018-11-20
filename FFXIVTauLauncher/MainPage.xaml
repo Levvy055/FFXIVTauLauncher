@@ -26,7 +26,7 @@
             <TextBlock Text="1-Time Password" />
             <PasswordBox x:Name="BoxOneTime" InputScope="NumericPassword"/>
             <StackPanel Orientation="Horizontal" Spacing="25">
-                <Button Content="Login" Click="ButtonLogin_Click" MinWidth="100"/>
+                <Button x:Name="BtnLogin" Content="Login" Click="ButtonLogin_Click" MinWidth="100" IsEnabled="{x:Bind LoginEnabled, Mode=TwoWay}"/>
                 <Button Content="Account" MinWidth="100" Click="ButtonAccount_Click"/>
             </StackPanel>
         </StackPanel>

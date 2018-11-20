@@ -98,6 +98,7 @@ namespace FFXIVTauLauncher
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+            LogManager.Shutdown();
             deferral.Complete();
         }
 

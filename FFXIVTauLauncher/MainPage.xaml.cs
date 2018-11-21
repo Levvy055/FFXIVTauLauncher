@@ -6,8 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FFXIVAPI;
 using FFXIVTauLauncher.Annotations;
 
 namespace FFXIVTauLauncher
@@ -25,19 +28,22 @@ namespace FFXIVTauLauncher
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
         public MainPage()
         {
             this.InitializeComponent();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 400));
             ApplicationView.GetForCurrentView().TryResizeView(new Size(1220, 720));
-            ViewModel=new MainPageViewModel();
+            this.ViewModel = new MainPageViewModel();
             this.DataContext = ViewModel;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            this.FfApi = new FfApi();
         }
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void ButtonAccount_Click(object sender, RoutedEventArgs e)
@@ -45,11 +51,11 @@ namespace FFXIVTauLauncher
             ViewModel.LoginEnabled = !ViewModel.LoginEnabled;
         }
 
-        public MainPageViewModel ViewModel { get; set; }
-
         private void ButtonOptions_Click(object sender, RoutedEventArgs e)
         {
-            
         }
+
+        public MainPageViewModel ViewModel { get; }
+        public FfApi FfApi { get; }
     }
 }

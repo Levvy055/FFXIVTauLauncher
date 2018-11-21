@@ -5,12 +5,14 @@
     xmlns:local="using:FFXIVTauLauncher"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:MainPageViewModel, IsDesignTimeCreatable=True}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
-    ScrollViewer.VerticalScrollBarVisibility="Auto" MaxWidth="1280" MaxHeight="720" MinWidth="500" MinHeight="400">
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:MainPageViewModel, IsDesignTimeCreatable=True}" 
+    ScrollViewer.VerticalScrollBarVisibility="Auto" MinWidth="500" MinHeight="400">
     <Page.Resources>
         <local:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
     </Page.Resources>
+    <Page.Background>
+        <ThemeResource ResourceKey="SystemControlAltLowAcrylicWindowBrush"/>
+    </Page.Background>
     <RelativePanel>
         <RelativePanel.Background>
             <ImageBrush ImageSource="/Assets/final_fantasy_xiv_hyur_lancer_by_platinum_disco-d6dphl4.png"/>

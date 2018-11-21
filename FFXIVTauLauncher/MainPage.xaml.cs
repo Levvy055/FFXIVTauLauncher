@@ -29,7 +29,8 @@ namespace FFXIVTauLauncher
         public MainPage()
         {
             this.InitializeComponent();
-            ApplicationView.GetForCurrentView().TryResizeView(new Size(1500, 1000));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 400));
+            ApplicationView.GetForCurrentView().TryResizeView(new Size(1220, 720));
             ViewModel=new MainPageViewModel();
             this.DataContext = ViewModel;
         }
@@ -45,5 +46,10 @@ namespace FFXIVTauLauncher
         }
 
         public MainPageViewModel ViewModel { get; set; }
+
+        private void ButtonOptions_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

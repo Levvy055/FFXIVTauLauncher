@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:MainPageViewModel, IsDesignTimeCreatable=True}"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" 
+    ScrollViewer.VerticalScrollBarVisibility="Auto" MaxWidth="1280" MaxHeight="720" MinWidth="500" MinHeight="400">
     <Page.Resources>
         <local:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
     </Page.Resources>
@@ -15,7 +16,7 @@
             <ImageBrush ImageSource="/Assets/final_fantasy_xiv_hyur_lancer_by_platinum_disco-d6dphl4.png"/>
         </RelativePanel.Background>
         <StackPanel RelativePanel.AlignLeftWithPanel="True" 
-                    Margin="82,0,10,50" 
+                    Margin="70,0,10,50" 
                     MinWidth="400" 
                     Orientation="Vertical" 
                     ScrollViewer.VerticalScrollBarVisibility="Disabled" 
@@ -29,6 +30,7 @@
             <StackPanel Orientation="Horizontal" Spacing="25">
                 <Button Content="Login" Click="ButtonLogin_Click" MinWidth="100" IsEnabled="{Binding LoginEnabled, Mode=TwoWay}"/>
                 <Button Content="Account" MinWidth="100" Click="ButtonAccount_Click"/>
+                <Button Content="Options ..." MinWidth="100" Click="ButtonOptions_Click"/>
             </StackPanel>
             <Grid>
                 <Grid.ColumnDefinitions>

@@ -23,14 +23,15 @@ namespace FFXIVTauLauncher
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page, INotifyPropertyChanged
+    public sealed partial class MainPage : Page
     {
-        private bool _loginEnabled;
 
         public MainPage()
         {
             this.InitializeComponent();
             ApplicationView.GetForCurrentView().TryResizeView(new Size(1500, 1000));
+            ViewModel=new MainPageViewModel();
+            this.DataContext = ViewModel;
         }
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
@@ -40,28 +41,9 @@ namespace FFXIVTauLauncher
 
         private void ButtonAccount_Click(object sender, RoutedEventArgs e)
         {
-            LoginEnabled = !LoginEnabled;
+            ViewModel.LoginEnabled = !ViewModel.LoginEnabled;
         }
 
-        [NotifyPropertyChangedInvocator]
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private bool LoginEnabled
-        {
-            get => _loginEnabled;
-            set
-            {
-                if (_loginEnabled != value)
-                {
-                    _loginEnabled = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public MainPageViewModel ViewModel { get; set; }
     }
 }

@@ -5,7 +5,7 @@
     xmlns:local="using:FFXIVTauLauncher"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    mc:Ignorable="d" d:DataContext="{d:DesignInstance Type=local:MainPageViewModel, IsDesignTimeCreatable=True}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
 
     <RelativePanel>
@@ -13,12 +13,11 @@
             <ImageBrush ImageSource="/Assets/final_fantasy_xiv_hyur_lancer_by_platinum_disco-d6dphl4.png"/>
         </RelativePanel.Background>
         <StackPanel RelativePanel.AlignLeftWithPanel="True" 
-                    RelativePanel.AlignVerticalCenterWithPanel="True" 
-                    Margin="82,200,10,0" 
+                    Margin="82,0,10,50" 
                     MinWidth="400" 
                     Orientation="Vertical" 
                     ScrollViewer.VerticalScrollBarVisibility="Disabled" 
-                    Spacing="10">
+                    Spacing="10" RelativePanel.AlignBottomWithPanel="True">
             <TextBlock Text="Login" />
             <TextBox x:Name="BoxLogin"/>
             <TextBlock Text="Password" />
@@ -26,9 +25,23 @@
             <TextBlock Text="1-Time Password" />
             <PasswordBox x:Name="BoxOneTime" InputScope="NumericPassword"/>
             <StackPanel Orientation="Horizontal" Spacing="25">
-                <Button x:Name="BtnLogin" Content="Login" Click="ButtonLogin_Click" MinWidth="100" IsEnabled="{x:Bind LoginEnabled, Mode=TwoWay}"/>
+                <Button Content="Login" Click="ButtonLogin_Click" MinWidth="100" IsEnabled="{Binding LoginEnabled, Mode=TwoWay}"/>
                 <Button Content="Account" MinWidth="100" Click="ButtonAccount_Click"/>
             </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <CheckBox Content="Remember Login" IsChecked="False"/>
+                <CheckBox Content="Remember Password" Grid.Column="1"/>
+                <CheckBox Content="Auto Login" Grid.Row="1" />
+                <CheckBox Content="Enable 1-Time Password" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
         </StackPanel>
     </RelativePanel>
 </Page>

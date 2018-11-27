@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using FFXIVAPI.Settings;
 using NLog;
 
 namespace FFXIVTauLauncher
@@ -33,7 +34,7 @@ namespace FFXIVTauLauncher
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             InitLog();
-            Config = new Config();
+            Settings.Init();
         }
 
         /// <summary>
@@ -73,8 +74,6 @@ namespace FFXIVTauLauncher
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
-
-            ApplyConfig();
         }
 
         /// <summary>
@@ -98,46 +97,20 @@ namespace FFXIVTauLauncher
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
+            Settings.Save();
             LogManager.Shutdown();
             deferral.Complete();
         }
 
+        /// <summary>
+        /// Initializes Log File
+        /// </summary>
         private void InitLog()
         {
             var storageFolder = ApplicationData.Current.LocalFolder;
             LogManager.Configuration.Variables["LogPath"] = storageFolder.Path;
         }
 
-        private void ApplyConfig()
-        {
-            Config.Load().ContinueWith(task =>
-            {
-                if (task.Result)
-                {
-                    Config.Properties.ForEach(p =>
-                    {
-                        try
-                        {
-                            switch (p.PropertyType)
-                            {
-                                case PropertyType.SAVE_LOGIN:
-                                    break;
-                                case PropertyType.SAVE_PASSWORD:
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex, "Error during 'config loading' step");
-                        }
-                    });
-                }
-            });
-        }
-
-        public static Config Config { get; private set; }
         private Logger Log { get; } = LogManager.GetCurrentClassLogger();
     }
 }

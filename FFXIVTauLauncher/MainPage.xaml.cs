@@ -10,6 +10,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -19,12 +20,14 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using FFXIVAPI;
+using FFXIVAPI.Settings;
 using FFXIVTauLauncher.Annotations;
+using NLog;
 
 namespace FFXIVTauLauncher
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// Main Page (and only) of Launcher
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -35,12 +38,43 @@ namespace FFXIVTauLauncher
             ApplicationView.GetForCurrentView().TryResizeView(new Size(1220, 720));
             this.ViewModel = new MainPageViewModel();
             this.DataContext = ViewModel;
+            Loaded += OnLoaded;
+            Window.Current.VisibilityChanged += OnUnloaded;
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             this.FfApi = new FfApi();
         }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ViewModel.LoadConfig();
+            }
+            catch (NullReferenceException)
+            {
+                Settings.RestoreDefaults();
+                try
+                {
+                    ViewModel.LoadConfig();
+                }
+                catch (NullReferenceException)
+                {
+                    Log.Warn("Cannot read config after second try. Giving up :/");
+                }
+            }
+        }
+
+        private void OnUnloaded(object sender, VisibilityChangedEventArgs e)
+        {
+            if (!e.Visible)
+            {
+                ViewModel.SaveToConfig();
+            }
+        }
+
 
         private void ButtonLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -57,5 +91,6 @@ namespace FFXIVTauLauncher
 
         public MainPageViewModel ViewModel { get; }
         public FfApi FfApi { get; }
+        private static Logger Log { get; } = LogManager.GetCurrentClassLogger();
     }
 }

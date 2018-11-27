@@ -5,10 +5,14 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using FFXIVAPI.Settings;
 using FFXIVTauLauncher.Annotations;
 
 namespace FFXIVTauLauncher
 {
+    /// <summary>
+    /// A ViewModel from MVVM arch to <see cref="MainPage"/> class
+    /// </summary>
     public class MainPageViewModel : INotifyPropertyChanged
     {
         private bool _loginEnabled;
@@ -16,6 +20,22 @@ namespace FFXIVTauLauncher
         private bool _pswdRemember;
         private bool _oneTimePswdEnabled;
         private bool _autoLoginEnabled;
+
+        public void LoadConfig()
+        {
+            AutoLoginEnabled = Settings.Get().AutoLogin();
+            LoginRemember = Settings.Get().RememberLoginName();
+            PswdRemember = Settings.Get().RememberPassword();
+            OneTimePswdEnabled = Settings.Get().EnableOneTimePassword();
+        }
+
+        public void SaveToConfig()
+        {
+            Settings.Set().AutoLogin(AutoLoginEnabled);
+            Settings.Set().RememberLoginName(LoginRemember);
+            Settings.Set().RememberPassword(PswdRemember);
+            Settings.Set().EnableOneTimePassword(OneTimePswdEnabled);
+        }
 
         [NotifyPropertyChangedInvocator]
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

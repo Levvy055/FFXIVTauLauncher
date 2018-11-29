@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FFXIVAPI.Settings
+﻿namespace FFXIVAPI.Configs
 {
     public interface IConfigSet
     {
@@ -12,5 +6,6 @@ namespace FFXIVAPI.Settings
         void RememberPassword(bool remember);
         void AutoLogin(bool auto);
         void EnableOneTimePassword(bool enable);
+        void GamePath(string path);
     }
 }

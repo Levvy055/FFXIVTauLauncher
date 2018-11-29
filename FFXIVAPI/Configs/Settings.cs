@@ -1,21 +1,21 @@
 ﻿using Windows.Storage;
 using NLog;
 
-namespace FFXIVAPI.Settings
+namespace FFXIVAPI.Configs
 {
+    /// <summary>
+    /// Main class to manage all app settings
+    /// </summary>
     public static class Settings
     {
-        private static readonly string PREFIX = "ffxiv_launcher";
-        private static bool _initialized = false;
-        private static int _settingsVersion = 1;
+        private const string PREFIX = "ffxiv_launcher";
+        private const int SETTINGS_VERSION = 1;
+
         private static readonly ApplicationDataContainer _roamingSettings = ApplicationData.Current.RoamingSettings;
-        private static readonly StorageFolder _roamingFolder = ApplicationData.Current.RoamingFolder;
+        //private static readonly StorageFolder _roamingFolder = ApplicationData.Current.RoamingFolder;
 
         public static void Init()
         {
-            if (_initialized)
-            { return; }
-
             if (!_roamingSettings.Values.ContainsKey(PREFIX))
             {
                 var composite = CreateNewSettingsComposite();
@@ -25,9 +25,9 @@ namespace FFXIVAPI.Settings
             if (conf.ContainsKey("VERSION"))
             {
                 var v = (int)conf["VERSION"];
-                if (v < _settingsVersion)
+                if (v < SETTINGS_VERSION)
                 {
-                    Log.Info($"Older config found! Migrating {v} -> {_settingsVersion}");
+                    Log.Info($"Older config found! Migrating {v} -> {SETTINGS_VERSION}");
                     ApplyMigration(conf);
                 }
             }
@@ -42,7 +42,7 @@ namespace FFXIVAPI.Settings
             tc.EnableOneTimePassword(false);
             tc.RememberLoginName(false);
             tc.RememberPassword(false);
-            c["VERSION"] = _settingsVersion;
+            c["VERSION"] = SETTINGS_VERSION;
             return c;
         }
 
@@ -50,7 +50,7 @@ namespace FFXIVAPI.Settings
         {
             //TODO:Future Migrations
 
-            conf["VERSION"] = _settingsVersion;
+            conf["VERSION"] = SETTINGS_VERSION;
         }
 
         public static IConfigGet Get()

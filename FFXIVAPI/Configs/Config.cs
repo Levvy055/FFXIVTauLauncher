@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Storage;
 using NLog;
-using NLog.Fluent;
 
-namespace FFXIVAPI.Settings
+namespace FFXIVAPI.Configs
 {
     internal class Config : IConfigGet, IConfigSet
     {
@@ -50,6 +45,11 @@ namespace FFXIVAPI.Settings
             return (bool)DoGet("en_ot_pswd");
         }
 
+        public string GamePath()
+        {
+            return (string)DoGet("game_path");
+        }
+
         public void RememberLoginName(bool remember)
         {
             Container["rem_login"] = remember;
@@ -68,6 +68,11 @@ namespace FFXIVAPI.Settings
         public void EnableOneTimePassword(bool enable)
         {
             Container["en_ot_pswd"] = enable;
+        }
+
+        public void GamePath(string path)
+        {
+            Container["game_path"] = path;
         }
 
         public ApplicationDataCompositeValue Container { get; }

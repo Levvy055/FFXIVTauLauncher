@@ -20,7 +20,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using FFXIVAPI;
-using FFXIVAPI.Settings;
+using FFXIVAPI.Configs;
 using FFXIVTauLauncher.Annotations;
 using NLog;
 

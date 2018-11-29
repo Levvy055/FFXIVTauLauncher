@@ -147,6 +147,11 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs.120, Version=14.0">
+      <Name>Microsoft Visual C++ 2013 Runtime Package for Windows Universal</Name>
+    </SDKReference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FFXIVAPI\FFXIVAPI.csproj">
       <Project>{658B0D37-067E-44A5-9271-1B5C89483508}</Project>
       <Name>FFXIVAPI</Name>

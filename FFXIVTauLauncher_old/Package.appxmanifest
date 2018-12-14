@@ -20,6 +20,11 @@
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="transparent" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol" Executable="FFXIVGameLaunchService.exe" EntryPoint="FFXIVGameLaunchService.Program">
+          <uap:Protocol Name="ffxivservice" />
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>

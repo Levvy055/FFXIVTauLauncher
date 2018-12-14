@@ -6,9 +6,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
@@ -45,6 +49,7 @@ namespace FFXIVTauLauncher
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             this.FfApi = new FfApi();
+            ViewModel.LoginName = "ffxivservice://location";
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -80,9 +85,25 @@ namespace FFXIVTauLauncher
         {
         }
 
-        private void ButtonAccount_Click(object sender, RoutedEventArgs e)
+        private async void ButtonAccount_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.LoginEnabled = !ViewModel.LoginEnabled;
+            //await Launcher.LaunchFileAsync(new StorageFile("FFXIVGameLaunchService.exe"), new LauncherOptions { });
+            Console.WriteLine(ViewModel.LoginName);
+            try
+            {
+                var s=await Package.Current.InstalledLocation.GetFilesAsync();
+                foreach (var sf in s)
+                {
+                    Debug.WriteLine(sf.Name);
+                }
+                var t = await Package.Current.InstalledLocation.GetFileAsync(ViewModel.LoginName);
+                Debug.WriteLine(t);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         private void ButtonOptions_Click(object sender, RoutedEventArgs e)

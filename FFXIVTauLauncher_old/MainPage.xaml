@@ -24,7 +24,7 @@
                     ScrollViewer.VerticalScrollBarVisibility="Disabled" 
                     Spacing="10" RelativePanel.AlignBottomWithPanel="True">
             <TextBlock Text="Login" />
-            <TextBox x:Name="BoxLogin"/>
+            <TextBox x:Name="BoxLogin" Text="{Binding LoginName, Mode=TwoWay}"/>
             <TextBlock Text="Password" />
             <PasswordBox x:Name="BoxPassword" InputScope="Password"/>
             <TextBlock Text="1-Time Password" />

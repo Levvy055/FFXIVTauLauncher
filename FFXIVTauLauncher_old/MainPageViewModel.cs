@@ -1,11 +1,17 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using FFXIVTauLauncher.Configs;
+using System.Text;
+using System.Threading.Tasks;
+using FFXIVAPI.Configs;
+using FFXIVTauLauncher.Annotations;
 
 namespace FFXIVTauLauncher
 {
     /// <summary>
-    /// A ViewModel from MVVM arch to <see cref="LoginPage"/> class
+    /// A ViewModel from MVVM arch to <see cref="MainPage"/> class
     /// </summary>
     public class MainPageViewModel : INotifyPropertyChanged
     {
@@ -31,7 +37,8 @@ namespace FFXIVTauLauncher
             Settings.Set().RememberPassword(PswdRemember);
             Settings.Set().EnableOneTimePassword(OneTimePswdEnabled);
         }
-        
+
+        [NotifyPropertyChangedInvocator]
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

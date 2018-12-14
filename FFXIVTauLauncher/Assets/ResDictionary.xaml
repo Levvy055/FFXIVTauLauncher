@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:FFXIVTauLauncher"
+                    xmlns:extensions="clr-namespace:FFXIVTauLauncher.Extensions">
+    <extensions:WidthConverter x:Key="WidthConverter" />
+    <extensions:NullableBooleanToBooleanConverter x:Key="NullableBooleanToBooleanConverter"/>
+</ResourceDictionary>
